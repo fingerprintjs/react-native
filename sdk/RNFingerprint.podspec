@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 #   s.requires_arc = true
 
   s.dependency "React-Core"
-  s.dependency "Fingerprint-iOS", "~> 4.0"
+  s.dependency "Fingerprint-iOS", "~> 4.1.0"
 
   # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
   # `RCT_NEW_ARCH_ENABLED` for the pod when the app is built with the New Architecture.
