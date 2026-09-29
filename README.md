@@ -375,10 +375,10 @@ See the full [generated API Reference](https://fingerprintjs.github.io/react-nat
 
 ## Version support
 
-| SDK major version | Fingerprint API version | Status | End of support |
-|---|---|---|---|
-| v4.x (current) | [v4](https://docs.fingerprint.com/reference/js-agent) | Supported | - |
-| v1.x-v3.x | v3 | Deprecated (security fixes only) | To be decided |
+| SDK major version | Android SDK | iOS SDK | JS Agent version | Status | End of support |
+|---|---|---|---|---|---|
+| v4.x (current) | v4.x | v4.x | [v4](https://docs.fingerprint.com/reference/js-agent) | Supported | - |
+| v1.x-v3.x | v2.x | v2.x | [v3](https://docs.fingerprint.com/reference/v3/javascript-agent) | Deprecated (security fixes only) | To be decided |
 
 ## Support and feedback
 
