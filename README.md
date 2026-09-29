@@ -56,6 +56,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
     - [Linking and tagging information](#linking-and-tagging-information)
   - [API Reference](#api-reference)
   - [Additional Resources](#additional-resources)
+  - [Version support](#version-support)
   - [Support and feedback](#support-and-feedback)
   - [License](#license)
 
@@ -371,6 +372,13 @@ See the full [generated API Reference](https://fingerprintjs.github.io/react-nat
 
 - [Server-to-Server API](https://dev.fingerprint.com/docs/server-api)
 - [Fingerprint Pro documentation](https://dev.fingerprint.com/docs)
+
+## Version support
+
+| SDK major version | Fingerprint API version | Status | End of support |
+|---|---|---|---|
+| v4.x (current) | [v4](https://docs.fingerprint.com/reference/js-agent) | Supported | - |
+| v1.x-v3.x | v3 | Deprecated (security fixes only) | To be decided |
 
 ## Support and feedback
 
