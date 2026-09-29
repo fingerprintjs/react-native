@@ -1,11 +1,14 @@
 /**
- * Rejects NaN / Infinity in `tags`.
+ * Rejects NaN / Infinity and circular references in `tags`.
  *
  * `TagsPrimitive` is `number`, so `{ score: Number('oops') }` type-checks.
  * JSON has no literal for those values. Each platform rewrites them
  * differently (`null` on web, `0` on iOS via `NSNumber.intValue`, usually
  * `null` on Android) and identification still succeeds. Throw instead of
  * storing the wrong tag.
+ *
+ * A circular reference makes this walk recurse forever. Reject it with a
+ * clean error instead of letting it blow the call stack.
  *
  * `Date`, `Map`, and class instances are already a type error on `TagsValue`.
  * This walk does not reject them. The RN bridge and JS agent do not agree on
@@ -20,10 +23,10 @@ export function validateTags(tags?: unknown): void {
   if (tags === null || tags === undefined) {
     return
   }
-  walk(tags, 'tags')
+  walk(tags, 'tags', [])
 }
 
-function walk(value: unknown, path: string): void {
+function walk(value: unknown, path: string, ancestors: unknown[]): void {
   if (value === null || value === undefined) {
     return
   }
@@ -39,14 +42,20 @@ function walk(value: unknown, path: string): void {
     return
   }
 
+  if (ancestors.includes(value)) {
+    throw new TypeError(`${path} contains a circular reference`)
+  }
+  ancestors.push(value)
+
   if (Array.isArray(value)) {
     for (const [index, entry] of value.entries()) {
-      walk(entry, `${path}[${String(index)}]`)
+      walk(entry, `${path}[${String(index)}]`, ancestors)
     }
-    return
+  } else {
+    for (const [key, entry] of Object.entries(value)) {
+      walk(entry, `${path}['${key}']`, ancestors)
+    }
   }
 
-  for (const [key, entry] of Object.entries(value)) {
-    walk(entry, `${path}['${key}']`)
-  }
+  ancestors.pop()
 }
