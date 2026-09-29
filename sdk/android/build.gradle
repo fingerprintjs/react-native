@@ -5,7 +5,11 @@ plugins {
 
 // The SDK supports the New Architecture only. Applying the React Gradle plugin runs library Codegen
 // (generates the `NativeRNFingerprintSpec` base class).
-apply plugin: 'com.facebook.react'
+// Only apply when evaluated as a subproject of a host RN app; when run standalone (e.g. CLI tasks like
+// printFingerprintNativeSDKVersion), project == rootProject and the React plugin is not on the classpath.
+if (project != rootProject) {
+    apply plugin: 'com.facebook.react'
+}
 
 apply from: 'fingerprint.gradle'
 
