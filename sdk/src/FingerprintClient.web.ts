@@ -1,7 +1,7 @@
 import * as Fingerprint from '@fingerprint/agent'
 import type { FingerprintClient, FingerprintResponse, GetOptions, StartOptions } from './types'
 import { unwrapError } from './unwrapError'
-import { isTruthy } from './utils'
+import { isEmptyArray, isTruthy } from './utils'
 
 const packageVersion = '__VERSION__'
 
@@ -15,7 +15,10 @@ class WebFingerprintClient implements FingerprintClient {
   private readonly agent: Fingerprint.Agent
 
   constructor({ apiKey, region, endpoints: endpointsParam, web }: StartOptions) {
-    const endpoints = isTruthy(endpointsParam) ? Fingerprint.withoutDefault(endpointsParam) : endpointsParam
+    const endpoints =
+      isTruthy(endpointsParam) && !isEmptyArray(endpointsParam)
+        ? Fingerprint.withoutDefault(endpointsParam)
+        : endpointsParam
 
     this.agent = Fingerprint.start({
       apiKey,

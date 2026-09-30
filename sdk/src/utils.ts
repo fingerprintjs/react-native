@@ -6,6 +6,10 @@ export function isTruthy<T>(value?: T | null): value is T {
   return Boolean(value)
 }
 
+export function isEmptyArray(value: unknown): value is [] {
+  return Array.isArray(value) && value.length === 0
+}
+
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
