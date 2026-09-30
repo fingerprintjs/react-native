@@ -27,7 +27,6 @@ export type ErrorCode =
   | 'wrong_region'
   | 'feature_not_enabled'
   | 'visitor_not_found'
-  | 'event_not_found'
   | 'missing_module'
   | 'payload_too_large'
   | 'service_unavailable'

@@ -15,7 +15,6 @@ import com.fingerprint.android.RequestTimeout
 import com.fingerprint.android.TooManyRequest
 import com.fingerprint.android.WrongRegion
 import com.fingerprint.android.SubscriptionNotActive
-import com.fingerprint.android.SubscriptionNotFound
 import com.fingerprint.android.SubscriptionRestricted
 import com.fingerprint.android.InstallationMethodRestricted
 import com.fingerprint.android.EnvironmentRestricted
@@ -132,7 +131,6 @@ class RNFingerprintModule(reactContext: ReactApplicationContext) : NativeRNFinge
       is TooManyRequest -> "too_many_requests"
       is WrongRegion -> "wrong_region"
       is SubscriptionNotActive -> "subscription_not_active"
-      is SubscriptionNotFound -> "subscription_not_found"
       is SubscriptionRestricted -> "subscription_restricted"
       is InstallationMethodRestricted -> "installation_method_restricted"
       is EnvironmentRestricted -> "environment_restricted"

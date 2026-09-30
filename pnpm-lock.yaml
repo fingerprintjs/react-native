@@ -24,8 +24,8 @@ importers:
         specifier: ^5.16.1
         version: 5.16.1(eslint@10.7.0(jiti@2.6.1))(typescript@6.0.3)
       '@fingerprintjs/changesets-native-dependency-format':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@fingerprintjs/commit-lint-dx-team':
         specifier: ^0.1.0
         version: 0.1.0
@@ -1306,8 +1306,8 @@ packages:
   '@fingerprintjs/changesets-changelog-format@0.2.0':
     resolution: {integrity: sha512-1jI+J1r8OKUtjlFfQW4bmQ8u4E1097zPaKw5fUCgAcahLPgwW4Ae+Keoc253CSyyaKgTu2v/wniUGchmPaXAsg==}
 
-  '@fingerprintjs/changesets-native-dependency-format@0.1.0':
-    resolution: {integrity: sha512-fRrunw8LFXjKEFGWxSB/LG1/0GRkZARKNEs1Zuz9rOSDsJdjzhsYnv1Bo0IEkv7tTCTTJk69oAXGYFOXtWfHeg==}
+  '@fingerprintjs/changesets-native-dependency-format@0.2.0':
+    resolution: {integrity: sha512-wUh8Zg+veIPyLs8YWl1AOb1ARUy0F+Yw2ak1Cr0n2U3QCXlZPZ7lTt24DmKSoOgqbA4ZQqu2DOupgsNajkgOog==}
 
   '@fingerprintjs/commit-lint-dx-team@0.1.0':
     resolution: {integrity: sha512-MSYn4bRt9Iyob8hB3Oc/IXz3O8DA2E3ccqlG46pYYhdF090W6u9BNa9uCaVg611FUzqMU41+vs8ztXLkICbKkw==}
@@ -2071,10 +2071,12 @@ packages:
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@xmldom/xmldom@0.9.10':
     resolution: {integrity: sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -7550,7 +7552,7 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@fingerprintjs/changesets-native-dependency-format@0.1.0':
+  '@fingerprintjs/changesets-native-dependency-format@0.2.0':
     dependencies:
       '@changesets/get-release-plan': 4.0.16
       '@changesets/types': 6.1.0

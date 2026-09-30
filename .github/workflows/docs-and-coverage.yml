@@ -9,7 +9,7 @@ jobs:
   generate-docs-and-coverage:
     name: Generate docs and coverage report
     uses: fingerprintjs/dx-team-toolkit/.github/workflows/docs-and-coverage.yml@v1
-    with:
-      prepare-gh-pages-commands: |
-        mv docs/* ./gh-pages
-        mv coverage/lcov-report ./gh-pages/coverage
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

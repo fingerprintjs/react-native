@@ -4,9 +4,15 @@
     "@fingerprintjs/changesets-native-dependency-format",
     {
       "repo": "fingerprintjs/react-native",
-      "androidPath": "sdk/android",
-      "iosPodspecPath": "sdk/RNFingerprint.podspec",
-      "packageName": "@fingerprint/react-native"
+      "packageName": "@fingerprint/react-native",
+      "ios": {
+        "podspecPath": "sdk/RNFingerprint.podspec",
+        "dependencyName": "Fingerprint-iOS"
+      },
+      "android": {
+        "path": "sdk/android",
+        "gradleTaskName": "printFingerprintNativeSDKVersion"
+      }
     }
   ],
   "commit": false,

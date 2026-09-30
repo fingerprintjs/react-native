@@ -68,7 +68,7 @@ let package = Package(
         .package(name: "React-GeneratedCode", path: "../../../ios"),
         .package(
             url: "https://github.com/fingerprintjs/fingerprint-ios",
-            from: "4.0.0"
+            .upToNextMinor(from: "4.1.0")
         ),
     ],
     targets: [

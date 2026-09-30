@@ -1,5 +1,5 @@
 {
-  "mode": "pre",
+  "mode": "exit",
   "tag": "rc",
   "initialVersions": {
     "@fingerprint/react-native": "3.17.0"

@@ -41,13 +41,13 @@ extension FPError {
     var reactMessage: String {
         switch self {
         case .apiError(let apiError):
-            return apiError.message ?? self.localizedDescription
+            return apiError.message ?? self.description
         case .networkError(let networkError):
             return networkError.localizedDescription
         case .jsonParsingError(let jsonParsingError):
             return jsonParsingError.localizedDescription
         default:
-            return self.localizedDescription
+            return self.description
         }
     }
 
@@ -88,7 +88,6 @@ extension APIError {
         case .visitorNotFound: return "visitor_not_found"
         case .tooManyRequests: return "too_many_requests"
         case .failed: return "failed"
-        case .eventNotFound: return "event_not_found"
         case .missingModule: return "missing_module"
         case .payloadTooLarge: return "payload_too_large"
         case .serviceUnavailable: return "service_unavailable"
@@ -97,7 +96,6 @@ extension APIError {
         case .invalidProxyIntegrationHeaders: return "invalid_proxy_integration_headers"
         case .subscriptionRestricted: return "subscription_restricted"
         case .environmentRestricted: return "environment_restricted"
-        case .subscriptionNotFound: return "subscription_not_found"
         case .installationMethodRestricted: return "installation_method_restricted"
         // A future SDK may add codes; fall back to the raw value rather than losing the information.
         @unknown default: return code.rawValue

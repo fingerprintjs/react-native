@@ -59,7 +59,7 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: pnpm add @fingerprint/react-native@${{github.event.release.tag_name}}
+        run: pnpm add ${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
@@ -259,7 +259,7 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: pnpm add @fingerprint/react-native@${{github.event.release.tag_name}}
+        run: pnpm add ${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
@@ -410,7 +410,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: pnpm add @fingerprint/react-native@${{github.event.release.tag_name}}
+        run: pnpm add ${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 

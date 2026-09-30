@@ -36,7 +36,7 @@
     "@changesets/types": "^6.1.0",
     "@commitlint/cli": "^21.2.1",
     "@eslint-react/eslint-plugin": "^5.16.1",
-    "@fingerprintjs/changesets-native-dependency-format": "^0.1.0",
+    "@fingerprintjs/changesets-native-dependency-format": "^0.2.0",
     "@fingerprintjs/commit-lint-dx-team": "^0.1.0",
     "@fingerprintjs/eslint-config-dx-team": "^3.0.0",
     "@fingerprintjs/prettier-config-dx-team": "^0.3.0",
