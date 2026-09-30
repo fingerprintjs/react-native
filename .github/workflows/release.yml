@@ -24,9 +24,9 @@ jobs:
         sudo gem install -n /usr/local/bin cocoapods
         pod --version
         pnpm build
+      useTrustedPublishing: true
       # Required by Gradle
       java-version: '17'
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
       RUNNER_APP_PRIVATE_KEY: ${{ secrets.RUNNER_APP_PRIVATE_KEY }}
-      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
