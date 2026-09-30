@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RNFingerprint"
-  s.version      = "4.0.0-rc.1"
+  s.version      = "4.0.0"
   s.summary      = "Fingerprint Pro visitor identification in a React Native app"
   s.description  = "Official React Native client for Fingerprint. Best identification solution for React Native."
   s.homepage     = "https://github.com/fingerprintjs"

@@ -1,5 +1,172 @@
 # @fingerprint/react-native
 
+## 4.0.0
+
+### Major Changes
+
+- Dropped React Native Old Architecture support. The native module is now a TurboModule (New Architecture only) exposed via a Codegen spec.
+
+  Migrated the project to [Strict TypeScript API](https://reactnative.dev/docs/strict-typescript-api).
+
+  This is a breaking change: the SDK now requires React Native >= 0.80 (Expo SDK >= 54) with the [New Architecture](https://reactnative.dev/architecture/landing-page) enabled. ([e83c165](https://github.com/fingerprintjs/react-native/commit/e83c165cc7282d6820f70d06d8ad1ae8e11450a1))
+
+- Migrated the SDK to Fingerprint API v4 and realigned the public API with `@fingerprint/react`. This is a breaking change on every platform (web, iOS, Android).
+
+  **Renamed API**
+
+  - `FingerprintJsProProvider` → `FingerprintProvider`.
+  - `FingerprintJsProAgent` (constructed with `new`) → `start(options)`, returning a client with a single `get(options)` method (`getVisitorId`/`getVisitorData` are removed).
+  - Added `useFingerprint()` to read the client from context.
+
+  **Single options object**
+
+  - `getData(tags, linkedId, options)` → `getData({ tags, linkedId, timeout })`.
+  - `useVisitorData` now returns a discriminated union (`data`/`isLoading`/`isFetched`/`error`), and `getData` always throws on error. The `throwOnError` option is removed. `immediate` defaults to `false`.
+
+  **Grouped provider/start options**
+
+  - Platform-only options are nested: `android` (`allowUseOfLocationData`, `locationTimeoutMillis`), `ios` (`allowUseOfLocationData`), `web` (`storageKeyPrefix`, `urlHashing`, `cache`). `locationTimeoutMillisAndroid` moves to `android.locationTimeoutMillis`.
+  - `endpointUrl` + `fallbackEndpointUrls` are replaced by a single `endpoints` (string or string[]).
+
+  **snake_case response**
+
+  - The response is now the flat, snake_case `FingerprintResponse` (`visitor_id`, `event_id`, `suspect_score?`, `sealed_result`), matching the Server API v4 and JS agent. `requestId` is replaced by `event_id`, `confidence` is removed, and `suspect_score` is a new optional Smart Signals value; `sealedResult` is renamed to `sealed_result`. The nested extended fields (`ipLocation`, `firstSeenAt`, etc.) and the `extendedResponseFormat` option are removed (v4 always returns the flat format).
+
+  **Single error type**
+
+  - The ~28 error classes are replaced by a single `FingerprintError` (`{ name, code, event_id }`) plus an `isFingerprintError` type guard. Discriminate on `error.code` (e.g. `too_many_requests`).
+  - Every network failure reports `code: 'network_error'` on all platforms. The platform-specific `network_unavailable` (Android), `network_connection` and `network_abort` (web) codes are not emitted.
+
+  **Web**
+
+  - The web implementation now uses `@fingerprint/agent` (v4) instead of `@fingerprintjs/fingerprintjs-pro-spa`. Install `@fingerprint/agent` as the web peer dependency.
+  - ️Caching is available only on **web** and is disabled by default. To enable caching on web, pass the JavaScript agent [cache](https://docs.fingerprint.com/reference/js-agent-start-function#cache) option:
+    ```jsx
+    <FingerprintProvider
+      apiKey={'your-fpjs-public-api-key'}
+      region={'eu'}
+      web={{cache: {storage: 'sessionStorage', duration: 'optimize-cost'}}}
+    >
+      <App />
+    </FingerprintProvider>
+    ```
+
+  **iOS**:
+  - The new version floor for iOS is **15.1**.
+
+  **Android**:
+  - The new version floor for Android is **Android 7.0 (API level 24+)**.
+
+  ## Migration
+
+  **Provider**
+
+  ```diff
+  - import { FingerprintJsProProvider } from '@fingerprint/react-native'
+  + import { FingerprintProvider } from '@fingerprint/react-native'
+
+  - <FingerprintJsProProvider apiKey="PUBLIC_API_KEY" region="eu">
+  + <FingerprintProvider apiKey="PUBLIC_API_KEY" region="eu">
+      <App />
+  - </FingerprintJsProProvider>
+  + </FingerprintProvider>
+  ```
+
+  **Hook (`useVisitorData`)**
+
+  ```diff
+  - const { isLoading, error, data, getData } = useVisitorData()
+  + const { isLoading, isFetched, error, data, getData } = useVisitorData()
+
+    // positional args + opt-in throwing → single options object, always throws
+  - await getData({ userAction: 'login' }, 'user_1234', { timeout: 5000, throwOnError: true })
+  + await getData({ tags: { userAction: 'login' }, linkedId: 'user_1234', timeout: 5000 })
+
+  - data?.visitorId
+  - data?.confidence.score
+  + data?.visitor_id
+  + data?.suspect_score
+  ```
+
+  **Imperative client**
+
+  ```diff
+  - import { FingerprintJsProAgent } from '@fingerprint/react-native'
+  + import { start } from '@fingerprint/react-native'
+
+  - const client = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu' })
+  - const visitorId = await client.getVisitorId()
+  - const data = await client.getVisitorData()
+  + const fp = start({ apiKey: 'PUBLIC_API_KEY', region: 'eu' })
+  + const result = await fp.get()
+  + result.visitor_id
+  ```
+
+  **Provider / start options**
+
+  ```diff
+    {
+      apiKey: 'PUBLIC_API_KEY',
+      region: 'eu',
+  -   endpointUrl: 'https://metrics.example.com',
+  -   fallbackEndpointUrls: ['https://metrics2.example.com'],
+  +   endpoints: ['https://metrics.example.com', 'https://metrics2.example.com'],
+  -   extendedResponseFormat: true,
+  -   allowUseOfLocationData: true,
+  -   locationTimeoutMillisAndroid: 5000,
+  +   android: { allowUseOfLocationData: true, locationTimeoutMillis: 5000 },
+  +   ios: { allowUseOfLocationData: true },
+    }
+  ```
+
+  **Errors**
+
+  ```diff
+  - import { TooManyRequestError } from '@fingerprint/react-native'
+  + import { isFingerprintError } from '@fingerprint/react-native'
+
+    try {
+      await fp.get()
+    } catch (error) {
+  -   if (error instanceof TooManyRequestError) {
+  +   if (isFingerprintError(error) && error.code === 'too_many_requests') {
+        // handle rate limiting
+      }
+    }
+  ```
+
+  **Web peer dependency**
+
+  ```diff
+  - npm install @fingerprintjs/fingerprintjs-pro-spa
+  + npm install @fingerprint/agent
+  ```
+
+  --- ([64f1dfb](https://github.com/fingerprintjs/react-native/commit/64f1dfbc04ae9913a5cbccd9aad75a94949ea913))
+
+### Minor Changes
+
+- Added experimental support for [Swift Package Manager](https://swift.org/package-manager/). The library now ships with its own `Package.swift`.
+
+  If you are on React Native >= 0.87, you can run:
+
+  ```bash
+  cd ios
+  # deintegrate will remove CocoaPods from your project
+  npx react-native spm --deintegrate
+  ```
+
+  to consume the library via Swift Package Manager. ([7af274f](https://github.com/fingerprintjs/react-native/commit/7af274f34db8990e047bf6062f531ae2c6c73da4))
+
+### Patch Changes
+
+- Fixed `tags` validation to reject circular references with a clear `TypeError` instead of throwing an unhandled `RangeError: Maximum call stack size exceeded`. ([f102cf0](https://github.com/fingerprintjs/react-native/commit/f102cf0591a9b3be86c467a97073c7bb92aa3b6c))
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`~> 4.1.0`**
+- Fingerprint Android SDK Version Range: **`>= 4.1.0 and < 4.2.0`**
+
 ## 4.0.0-rc.1
 
 ### Major Changes
