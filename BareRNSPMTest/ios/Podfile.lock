@@ -7,7 +7,7 @@ PODS:
     - ReactNativeDependencies
   - FBLazyVector (0.87.1):
     - React-Core-prebuilt
-  - Fingerprint-iOS (4.0.0)
+  - Fingerprint-iOS (4.1.0)
   - fmt (12.1.0):
     - ReactNativeDependencies
   - glog (0.3.5):
@@ -1674,8 +1674,8 @@ PODS:
     - React-utils (= 0.87.1)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.87.1)
-  - RNFingerprint (1.0.4):
-    - Fingerprint-iOS (~> 4.0)
+  - RNFingerprint (4.0.0):
+    - Fingerprint-iOS (~> 4.1.0)
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1978,7 +1978,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 501a575c40c0b50c89685762dd3e415e6bb26fb0
   fast_float: 7c925d1cebf8328d4018d061f49377e9f887e3b4
   FBLazyVector: e08a27053b503eeb756ea4bd75d570d2f2522a1b
-  Fingerprint-iOS: c732b9dede1ff37a256fbc7efd3f22b7d258f023
+  Fingerprint-iOS: 08a6bce4c420553019b6a2b684ddd563c489acdd
   fmt: ba0886e864ebb21d14c98b2e12e164b8002f5b93
   glog: 3cf7cb46f743c4bc758ae3e6d9c15bd1b4cfd6d4
   hermes-engine: 5668a8e8a8741b4cddc6245af48a421592e4d0f0
@@ -2059,7 +2059,7 @@ SPEC CHECKSUMS:
   ReactCodegen: c5a9b8634e580167b9ca4a175749a30d27dbcf0e
   ReactCommon: 749169e12aa3461a3df3656a00e48dbe0456b2d6
   ReactNativeDependencies: 94c922c39e0e6150ee9ad05e2ca1946e0ef55783
-  RNFingerprint: fff5c717067a9ff7fea035f253f384e1683b8ec2
+  RNFingerprint: 896ed377a75646e5e02166382e88681606d83686
   SocketRocket: 37aec555668fb852ec12e3c0de59a86ca58f0871
   Yoga: d1c536142c5ff8ec8cd856ab2a7c227a1d875c8e
 
