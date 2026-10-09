@@ -1,3 +1,9 @@
+# Keep CocoaPods and Swift Package Manager on the same patch range (Package.swift is the source of truth).
+fingerprint_lower = File.read(File.join(__dir__, 'Package.swift'))[/\.upToNextMinor\(\s*from:\s*"([\d.]+)"\s*\)/m, 1]
+raise 'Could not read the Fingerprint-iOS version range from Package.swift' if fingerprint_lower.nil?
+fingerprint_major, fingerprint_minor = fingerprint_lower.split('.').map(&:to_i)
+fingerprint_upper = "#{fingerprint_major}.#{fingerprint_minor + 1}.0"
+
 Pod::Spec.new do |s|
   s.name         = "RNFingerprint"
   s.version      = "4.0.0"
@@ -20,7 +26,7 @@ Pod::Spec.new do |s|
 #   s.requires_arc = true
 
   s.dependency "React-Core"
-  s.dependency "Fingerprint-iOS", "~> 4.1.0"
+  s.dependency "Fingerprint-iOS", ">= #{fingerprint_lower}", "< #{fingerprint_upper}"
 
   # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
   # `RCT_NEW_ARCH_ENABLED` for the pod when the app is built with the New Architecture.
