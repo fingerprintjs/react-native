@@ -338,7 +338,7 @@ const visitor = await fp.get({ tags, linkedId });
 ### Proximity Detection
 
 Proximity detection is a complementary, location-based signal available only on mobile platforms.
-You can find more information in [Android SDK documentation](https://dev.fingerprint.com/docs/native-android-integration#proximity-detection-for-android-devices) or in
+You can find more information in [Android SDK documentation](https://docs.fingerprint.com/docs/android-sdk#using-location-data-for-proximity-detection) or in
 [iOS SDK documentation](https://dev.fingerprint.com/docs/ios-sdk#using-location-data-for-proximity-detection).
 
 Platform-only options are grouped under `android` and `ios`. The Fingerprint SDK will only collect
