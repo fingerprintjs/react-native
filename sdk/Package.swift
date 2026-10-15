@@ -66,6 +66,7 @@ let package = Package(
         // repoint them. (This mirrors what `react-native spm scaffold` emits.)
         .package(name: "ReactNative", path: "../../../../xcframeworks"),
         .package(name: "React-GeneratedCode", path: "../../../ios"),
+        // RNFingerprint.podspec reads this version, so keep the `.upToNextMinor(from: "X.Y.Z")` format.
         .package(
             url: "https://github.com/fingerprintjs/fingerprint-ios",
             .upToNextMinor(from: "4.1.0")
