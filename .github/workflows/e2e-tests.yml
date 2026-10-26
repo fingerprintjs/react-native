@@ -396,7 +396,7 @@ jobs:
 
   e2e-tests-web:
     name: Web E2E tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
 
