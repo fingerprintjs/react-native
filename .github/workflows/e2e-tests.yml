@@ -10,9 +10,37 @@ on:
       - published
 
 jobs:
+  changes:
+    name: Detect non-markdown changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - id: filter
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          files=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[].filename')
+          echo "$files"
+          if grep -qvE '\.md$' <<< "$files"; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Only markdown files changed, skipping E2E tests"
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   build-matrix:
     name: Build matrix with react-native versions
     runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     outputs:
       react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -397,6 +425,8 @@ jobs:
   e2e-tests-web:
     name: Web E2E tests
     runs-on: ubuntu-24.04
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     steps:
       - uses: actions/checkout@v7
 
@@ -435,3 +465,23 @@ jobs:
           DEFAULT_EU_DEFAULT_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
           MINIMUM_US_SEALED_ENCRYPTION_KEY: ${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}
           MINIMUM_US_SEALED_PUBLIC_KEY: ${{ secrets.MINIMUM_US_SEALED_PUBLIC_KEY }}
+
+  e2e-result:
+    name: E2E Tests result
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - changes
+      - e2e-tests-android
+      - e2e-tests-ios
+      - e2e-tests-web
+    steps:
+      - run: |
+          if [[ "${{ needs.changes.result }}" != "success" ]]; then
+            echo "Change detection failed"
+            exit 1
+          fi
+          if [[ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            echo "E2E tests failed or were cancelled"
+            exit 1
+          fi
