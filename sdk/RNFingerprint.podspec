@@ -6,7 +6,7 @@ fingerprint_upper = "#{fingerprint_major}.#{fingerprint_minor + 1}.0"
 
 Pod::Spec.new do |s|
   s.name         = "RNFingerprint"
-  s.version      = "4.0.0"
+  s.version      = "4.1.0"
   s.summary      = "Fingerprint Pro visitor identification in a React Native app"
   s.description  = "Official React Native client for Fingerprint. Best identification solution for React Native."
   s.homepage     = "https://github.com/fingerprintjs"

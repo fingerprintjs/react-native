@@ -1,5 +1,16 @@
 # @fingerprint/react-native
 
+## 4.1.0
+
+### Minor Changes
+
+- Updated native Fingerprint SDKs to v4.2.0 (Android and iOS). The new versions collect new raw signals for screen sharing detection, improve rooting detection on Android, and bring performance and latency improvements. ([8fc5e5e](https://github.com/fingerprintjs/react-native/commit/8fc5e5eba61f64c0d40f2fd21ecb7fe9436fc1f2))
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`>= 4.2.0 and < 4.3.0`**
+- Fingerprint Android SDK Version Range: **`>= 4.2.0 and < 4.3.0`**
+
 ## 4.0.0
 
 ### Major Changes
