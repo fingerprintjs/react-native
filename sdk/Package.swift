@@ -69,7 +69,7 @@ let package = Package(
         // RNFingerprint.podspec reads this version, so keep the `.upToNextMinor(from: "X.Y.Z")` format.
         .package(
             url: "https://github.com/fingerprintjs/fingerprint-ios",
-            .upToNextMinor(from: "4.1.0")
+            .upToNextMinor(from: "4.2.0")
         ),
     ],
     targets: [

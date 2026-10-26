@@ -326,6 +326,14 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
+      # Pin Homebrew 6 until https://github.com/wix-incubator/DetoxInstruments/issues/85 is resolved
+      - name: Pin Homebrew 6
+        run: |
+          R="$(brew --repository)"
+          git -C "$R" fetch --tags --force origin
+          git -C "$R" checkout 6.0.5   # pick latest 6.x: git -C "$R" tag -l '6.*'
+          brew --version
+
       - name: Install macOS deps
         run: |
           brew trust wix/brew
