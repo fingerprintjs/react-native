@@ -71,7 +71,7 @@ dist/
 /ios/Pods/
 /vendor/bundle/
 
-sdk/README.MD
+sdk/README.md
 sdk/LICENSE
 
 .local
