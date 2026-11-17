@@ -1,5 +1,16 @@
 # @fingerprint/react-native
 
+## 4.2.0
+
+### Minor Changes
+
+- Updated native Fingerprint SDKs to v4.3.0 (Android and iOS). The new versions fix `NetworkUnavailableError` being thrown with certain VPN configurations on Android, improve error reporting, improve tampered request detection on iOS, and add new device signals to support upcoming jailbreak detection improvements. On iOS, a `timeout` below 500 ms is now raised to 500 ms. ([b19037e](https://github.com/fingerprintjs/react-native/commit/b19037ed5511e429e48d1267ffe7d322e6899908))
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`>= 4.3.0 and < 4.4.0`**
+- Fingerprint Android SDK Version Range: **`>= 4.3.0 and < 4.4.0`**
+
 ## 4.1.0
 
 ### Minor Changes
