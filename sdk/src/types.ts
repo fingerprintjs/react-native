@@ -194,6 +194,7 @@ export interface GetOptions {
   tags?: TagsValue
   /**
    * Custom timeout for the request, in milliseconds.
+   * On iOS, values below 500 are raised to 500.
    */
   timeout?: number
 }
